@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:memoapp/screens/1note/note.dart';
+import 'package:memoapp/screens/2todo/todo.dart';
+import 'package:memoapp/screens/3diary/diary.dart';
+import 'package:memoapp/screens/4archive/archive.dart';
 
 class MyTab extends StatefulWidget {
   const MyTab({Key? key}) : super(key: key);
@@ -41,6 +45,7 @@ class _MyTabState extends State<MyTab> with SingleTickerProviderStateMixin {
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(60.0),
           child: AppBar(
+            elevation: 0.0,
             bottom: TabBar(
               controller: _tabController,
               indicatorColor: tabColors[_tabController.index],
@@ -49,6 +54,7 @@ class _MyTabState extends State<MyTab> with SingleTickerProviderStateMixin {
                   child: Text(
                     'Note',
                     style: TextStyle(
+                        fontSize: 20.0,
                         color: _tabController.index == 0
                             ? tabColors[_tabController.index]
                             : Colors.grey),
@@ -56,8 +62,9 @@ class _MyTabState extends State<MyTab> with SingleTickerProviderStateMixin {
                 ),
                 Tab(
                   child: Text(
-                    'List',
+                    'Todo',
                     style: TextStyle(
+                        fontSize: 20.0,
                         color: _tabController.index == 1
                             ? tabColors[_tabController.index]
                             : Colors.grey),
@@ -67,6 +74,7 @@ class _MyTabState extends State<MyTab> with SingleTickerProviderStateMixin {
                   child: Text(
                     'Diary',
                     style: TextStyle(
+                        fontSize: 20.0,
                         color: _tabController.index == 2
                             ? tabColors[_tabController.index]
                             : Colors.grey),
@@ -76,6 +84,7 @@ class _MyTabState extends State<MyTab> with SingleTickerProviderStateMixin {
                   child: Text(
                     'Archiv',
                     style: TextStyle(
+                        fontSize: 20.0,
                         color: _tabController.index == 3
                             ? tabColors[_tabController.index]
                             : Colors.grey),
@@ -88,10 +97,10 @@ class _MyTabState extends State<MyTab> with SingleTickerProviderStateMixin {
         body: TabBarView(
           controller: _tabController,
           children: [
-            Icon(Icons.create),
-            Icon(Icons.delete),
-            Icon(Icons.face),
-            Icon(Icons.earbuds),
+            Note(),
+            Todo(),
+            Diary(),
+            Archive(),
           ],
         ),
       ),
