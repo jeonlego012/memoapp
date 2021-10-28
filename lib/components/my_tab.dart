@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:memoapp/screens/1note/note.dart';
-import 'package:memoapp/screens/2todo/todo.dart';
-import 'package:memoapp/screens/3diary/diary.dart';
-import 'package:memoapp/screens/4archive/archive.dart';
+import 'package:memoapp/screens/1note/note_list.dart';
+import 'package:memoapp/screens/2todo/todo_list.dart';
+import 'package:memoapp/screens/3diary/diary_list.dart';
+import 'package:memoapp/screens/4archive/archive_list.dart';
 
 class MyTab extends StatefulWidget {
   const MyTab({Key? key}) : super(key: key);
@@ -97,7 +97,7 @@ class _MyTabState extends State<MyTab> with SingleTickerProviderStateMixin {
         body: TabBarView(
           controller: _tabController,
           children: [
-            Note(),
+            NoteList(),
             Todo(),
             Diary(),
             Archive(),

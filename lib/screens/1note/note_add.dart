@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+import 'package:memoapp/model/note.dart';
+import 'package:memoapp/model/note_transaction.dart';
 
 class NoteAddScreen extends StatefulWidget {
   @override
@@ -42,7 +46,21 @@ class _NoteAddScreenState extends State<NoteAddScreen> {
     );
     return Scaffold(
       appBar: AppBar(
-        //leading: BackButton(onPressed:),
+        leading: BackButton(
+          onPressed: () async {
+            if (_formKey.currentState!.validate()) {
+              Timestamp createdTime = Timestamp.now();
+              addNote(
+                Note(
+                  title: _titleController.text,
+                  content: _contentController.text,
+                  creationTime: createdTime,
+                ),
+              );
+              Navigator.pop(context);
+            }
+          },
+        ),
         elevation: 0.0,
       ),
       body: textSection,
