@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 
 import 'package:memoapp/model/note.dart';
 import 'package:memoapp/model/note_transaction.dart';
@@ -70,12 +71,22 @@ class ChildNote extends StatelessWidget {
   ChildNote(this.note);
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      //leading: Text(this.note.creationTime.toDate().toString()),
-      title: Text(this.note.title),
-      subtitle: Text(this.note.content),
-      //"${DateFormat('yyyy년 MM월 dd일 kk시mm분').format(this.note.creationTime.toDate())}"),
-      //onTap:
+    return Container(
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(
+            width: 0.5,
+            color: Colors.grey,
+          ),
+        ),
+      ),
+      child: ListTile(
+        trailing: Text(
+            "${DateFormat('yyyy년 MM월 dd일').format(this.note.creationTime.toDate())}"),
+        title: Text(this.note.title),
+        subtitle: Text(this.note.content),
+        //onTap:
+      ),
     );
   }
 }
