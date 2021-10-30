@@ -28,7 +28,6 @@ class _NoteAddScreenState extends State<NoteAddScreen> {
                 decoration: const InputDecoration(
                   hintText: '제목',
                 ),
-                //validator:
               ),
               TextFormField(
                 controller: _contentController,
@@ -48,7 +47,8 @@ class _NoteAddScreenState extends State<NoteAddScreen> {
       appBar: AppBar(
         leading: BackButton(
           onPressed: () async {
-            if (_formKey.currentState!.validate()) {
+            if (_formKey.currentState!.validate() &&
+                _titleController.text != "") {
               Timestamp createdTime = Timestamp.now();
               addNote(
                 Note(
@@ -57,8 +57,8 @@ class _NoteAddScreenState extends State<NoteAddScreen> {
                   creationTime: createdTime,
                 ),
               );
-              Navigator.pop(context);
             }
+            Navigator.pop(context);
           },
         ),
         elevation: 0.0,
