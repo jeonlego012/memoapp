@@ -31,3 +31,14 @@ Future<Note> getNote(String noteId) async {
       .get()
       .then((DocumentSnapshot doc) => Note.fromSnapshot(doc));
 }
+
+Future<void> editNote(
+    String noteId, String title, String content, Timestamp newTime) {
+  final firebase_note =
+      FirebaseFirestore.instance.collection('notes').doc(noteId);
+  return firebase_note.update({
+    'title': title,
+    'content': content,
+    'creationTime': newTime,
+  });
+}

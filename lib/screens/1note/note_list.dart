@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:memoapp/model/note.dart';
 import 'package:memoapp/model/note_transaction.dart';
 import 'note_add.dart';
+import 'note_edit.dart';
 
 class NoteList extends StatefulWidget {
   const NoteList({Key? key}) : super(key: key);
@@ -68,11 +69,12 @@ class _NoteListState extends State<NoteList> {
 
 class ChildNote extends StatelessWidget {
   final Note note;
+
   ChildNote(this.note);
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         border: Border(
           bottom: BorderSide(
             width: 0.5,
@@ -82,10 +84,17 @@ class ChildNote extends StatelessWidget {
       ),
       child: ListTile(
         trailing: Text(
-            "${DateFormat('yyyy년 MM월 dd일').format(this.note.creationTime.toDate())}"),
-        title: Text(this.note.title),
-        subtitle: Text(this.note.content),
-        //onTap:
+            DateFormat('yyyy년 MM월 dd일').format(note.creationTime.toDate())),
+        title: Text(note.title),
+        subtitle: Text(note.content),
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => NoteEditScreen(noteId: note.id),
+            ),
+          );
+        },
       ),
     );
   }

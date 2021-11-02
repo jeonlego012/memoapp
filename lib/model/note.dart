@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-typedef NotePressedCallback = void Function(String noteId);
+typedef NotePressedCallback = void Function(String? noteId);
 
 class Note {
   final String? id;
