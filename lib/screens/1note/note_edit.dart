@@ -81,6 +81,15 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
             Navigator.pop(context);
           },
         ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.delete),
+            onPressed: () {
+              deleteNote(widget._noteId);
+              Navigator.pop(context);
+            },
+          ),
+        ],
         elevation: 0.0,
       ),
       body: textSection,

@@ -42,3 +42,9 @@ Future<void> editNote(
     'creationTime': newTime,
   });
 }
+
+Future<void> deleteNote(String noteId) async {
+  final firebase_note =
+      FirebaseFirestore.instance.collection('notes').doc(noteId);
+  firebase_note.delete();
+}

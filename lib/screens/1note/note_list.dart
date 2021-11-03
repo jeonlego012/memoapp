@@ -82,26 +82,46 @@ class ChildNote extends StatelessWidget {
           ),
         ),
       ),
-      child: ListTile(
-        title: Text(note.title),
-        subtitle: Text(
-          note.content,
-          maxLines: 3,
+      child: Dismissible(
+        background: Container(
+          alignment: Alignment.centerLeft,
+          padding: EdgeInsets.only(left: 20.0),
+          color: Colors.red,
+          child: Icon(Icons.delete),
         ),
-        trailing: Text(
-          DateFormat('yyyy. MM. dd').format(note.creationTime.toDate()),
-          style: TextStyle(
-            fontSize: 11.0,
-          ),
+        secondaryBackground: Container(
+          alignment: Alignment.centerRight,
+          padding: EdgeInsets.only(right: 20.0),
+          color: Colors.red,
+          child: Icon(Icons.delete),
         ),
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => NoteEditScreen(noteId: note.id),
-            ),
-          );
+        key: Key(note.title),
+        onDismissed: (direction) {
+          deleteNote(note.id!);
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text('deleted!')));
         },
+        child: ListTile(
+          title: Text(note.title),
+          subtitle: Text(
+            note.content,
+            maxLines: 3,
+          ),
+          trailing: Text(
+            DateFormat('yyyy. MM. dd').format(note.creationTime.toDate()),
+            style: TextStyle(
+              fontSize: 11.0,
+            ),
+          ),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => NoteEditScreen(noteId: note.id),
+              ),
+            );
+          },
+        ),
       ),
     );
   }
