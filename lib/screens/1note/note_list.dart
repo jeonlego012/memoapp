@@ -83,10 +83,17 @@ class ChildNote extends StatelessWidget {
         ),
       ),
       child: ListTile(
-        trailing: Text(
-            DateFormat('yyyy년 MM월 dd일').format(note.creationTime.toDate())),
         title: Text(note.title),
-        subtitle: Text(note.content),
+        subtitle: Text(
+          note.content,
+          maxLines: 3,
+        ),
+        trailing: Text(
+          DateFormat('yyyy. MM. dd').format(note.creationTime.toDate()),
+          style: TextStyle(
+            fontSize: 11.0,
+          ),
+        ),
         onTap: () {
           Navigator.push(
             context,

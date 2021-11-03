@@ -20,19 +20,23 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
   final _formKey = GlobalKey<FormState>(debugLabel: '_NoteEditScreenState');
 
   Note? _note;
+  bool _isLoading = true;
 
   _NoteEditScreenState({@required String? noteId}) {
     getNote(noteId!).then((Note note) {
       setState(() {
         _note = note;
+        _isLoading = false;
       });
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final _titleController = TextEditingController(text: _note!.title);
-    final _contentController = TextEditingController(text: _note!.content);
+    final _titleController =
+        TextEditingController(text: _isLoading ? null : _note!.title);
+    final _contentController =
+        TextEditingController(text: _isLoading ? null : _note!.content);
     Widget textSection = SingleChildScrollView(
       padding: const EdgeInsets.all(8.0),
       child: Form(
