@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-//import 'package:firebase_core/firebase_core.dart';
 import 'note.dart';
 
 Future<void> addNote(Note note) {
@@ -34,9 +33,9 @@ Future<Note> getNote(String noteId) async {
 
 Future<void> editNote(
     String noteId, String title, String content, Timestamp newTime) {
-  final firebase_note =
+  final firebaseNote =
       FirebaseFirestore.instance.collection('notes').doc(noteId);
-  return firebase_note.update({
+  return firebaseNote.update({
     'title': title,
     'content': content,
     'creationTime': newTime,
@@ -44,7 +43,7 @@ Future<void> editNote(
 }
 
 Future<void> deleteNote(String noteId) async {
-  final firebase_note =
+  final firebaseNote =
       FirebaseFirestore.instance.collection('notes').doc(noteId);
-  firebase_note.delete();
+  firebaseNote.delete();
 }

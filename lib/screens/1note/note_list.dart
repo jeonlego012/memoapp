@@ -118,6 +118,7 @@ class ChildNote extends StatelessWidget {
   final Note note;
 
   ChildNote(this.note);
+
   @override
   Widget build(BuildContext context) {
     return Container(

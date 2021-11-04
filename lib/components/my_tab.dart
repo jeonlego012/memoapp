@@ -98,7 +98,7 @@ class _MyTabState extends State<MyTab> with SingleTickerProviderStateMixin {
           controller: _tabController,
           children: [
             NoteList(),
-            Todo(),
+            TodoList(),
             Diary(),
             Archive(),
           ],
