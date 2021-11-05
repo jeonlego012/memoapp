@@ -34,9 +34,9 @@ class _ChildTodoState extends State<ChildTodo> {
   Widget build(BuildContext context) {
     final _contentController = TextEditingController(text: _todo!.content);
 
-    // final duedate = _todo?.dueDate;
-    // final today = DateTime.now();
-    // final dDay = today.difference(duedate!).inDays;
+    final duedate = _todo?.dueDate.toDate();
+    final today = DateTime.now();
+    final dDay = today.difference(duedate!).inDays;
     bool? isChecked = _todo?.complete;
 
     return Container(
@@ -53,29 +53,33 @@ class _ChildTodoState extends State<ChildTodo> {
           title: Form(
             key: _formKey,
             child: TextFormField(
-                controller: _contentController,
-                onChanged: (text) {
-                  editTodo(widget._todoId, _contentController.text,
-                      _todo?.dueDate, _todo?.complete);
-                }),
+              controller: _contentController,
+              decoration: const InputDecoration(border: InputBorder.none),
+              onTap: () => print('tap!'),
+            ),
           ),
           //////////////////////////////////
           secondary: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              // if (dDay == 2)
-              //   Text('모레')
-              // else if (dDay == 1)
-              //   Text('내일')
-              // else if (dDay == 0)
-              //   Text('오늘')
-              // else
-              //   Text('D-$dDay'),
-              Text('~ ' + DateFormat('MM/dd').format(_todo!.dueDate.toDate())),
+              if (dDay == -2)
+                Text('모레')
+              else if (dDay == -1)
+                Text('내일')
+              else if (dDay == 0)
+                Text('오늘')
+              else if (dDay > 0)
+                Text('D+$dDay')
+              else
+                Text('D$dDay'),
+              Text('~' + DateFormat('MM/dd').format(_todo!.dueDate.toDate())),
             ],
           ),
           value: isChecked,
           onChanged: (value) {
             setState(() => isChecked = value);
+            editTodo(widget._todoId, _contentController.text, _todo?.dueDate,
+                isChecked);
           }),
     );
   }
