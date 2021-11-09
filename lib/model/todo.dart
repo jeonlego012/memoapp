@@ -2,9 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Todo {
   final String? id;
-  final String content;
-  final Timestamp dueDate;
-  final bool complete;
+  String content;
+  Timestamp dueDate;
+  bool complete;
   final DocumentReference? reference;
 
   Todo({required this.content, required this.dueDate, required this.complete})

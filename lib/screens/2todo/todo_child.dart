@@ -21,11 +21,13 @@ class _ChildTodoState extends State<ChildTodo> {
   final _formKey = GlobalKey<FormState>(debugLabel: '_ChildTodoState');
 
   Todo? _todo;
+  String? _todoId;
 
   _ChildTodoState({@required String? todoId}) {
     getTodo(todoId!).then((Todo todo) {
       setState(() {
         _todo = todo;
+        _todoId = todoId;
       });
     });
   }
@@ -53,10 +55,18 @@ class _ChildTodoState extends State<ChildTodo> {
           title: Form(
             key: _formKey,
             child: TextFormField(
-              controller: _contentController,
-              decoration: const InputDecoration(border: InputBorder.none),
-              onTap: () => print('tap!'),
-            ),
+                controller: _contentController,
+                decoration: const InputDecoration(border: InputBorder.none),
+                onEditingComplete: () async {
+                  _todo!.content = _contentController.text;
+                  await editTodo(widget._todoId, _contentController.text,
+                      _todo?.dueDate, isChecked);
+                  await getTodo(_todoId!).then((Todo todo) {
+                    setState(() {
+                      _todo = todo;
+                    });
+                  });
+                }),
           ),
           //////////////////////////////////
           secondary: Column(
@@ -78,8 +88,6 @@ class _ChildTodoState extends State<ChildTodo> {
           value: isChecked,
           onChanged: (value) {
             setState(() => isChecked = value);
-            editTodo(widget._todoId, _contentController.text, _todo?.dueDate,
-                isChecked);
           }),
     );
   }

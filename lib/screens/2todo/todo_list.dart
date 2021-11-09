@@ -39,7 +39,21 @@ class _TodoListState extends State<TodoList> {
       children: [
         Expanded(
           child: ListView(
-            children: _buildTodoList(),
+            children: [
+              for (int i = 0; i < _todos.length; i++)
+                Padding(
+                  padding: const EdgeInsets.only(top: 16),
+                  child: FutureBuilder<ChildTodo>(
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.none &&
+                            snapshot.hasData == null) {
+                          return Container();
+                        }
+                        return Container(child: snapshot.data);
+                      },
+                      future: _buildChildTodo(_todos[i].id!)),
+                ),
+            ],
           ),
         ),
       ],
@@ -64,7 +78,20 @@ class _TodoListState extends State<TodoList> {
     );
   }
 
-  List<ChildTodo> _buildTodoList() {
-    return _todos.map((_todo) => ChildTodo(todoId: _todo.id)).toList();
+  // List<ChildTodo> _buildTodoList() {
+  //   final returnList =
+  //       _todos.map((_todo) => ChildTodo(todoId: _todo.id)).toList();
+  //   return returnList;
+  // }
+  // Future<List<ChildTodo>> _buildTodoList() async {
+  //   final returnList =
+  //       await _todos.map((_todo) => ChildTodo(todoId: _todo.id)).toList();
+  //   return returnList;
+  // }
+
+  //return ChileTodo
+  Future<ChildTodo> _buildChildTodo(String todoId) async {
+    final childTodo = await ChildTodo(todoId: todoId);
+    return childTodo;
   }
 }
