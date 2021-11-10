@@ -143,7 +143,7 @@ class ChildNote extends StatelessWidget {
           color: Colors.red,
           child: const Icon(Icons.delete),
         ),
-        key: Key(note.title),
+        key: Key(note.id!),
         onDismissed: (direction) {
           deleteNote(note.id!);
           ScaffoldMessenger.of(context)

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -44,43 +45,85 @@ class _ChildTodoState extends State<ChildTodo> {
                 ),
               ),
             ),
-            child: CheckboxListTile(
-                //////////////////////////////////
-                title: Form(
-                  key: _formKey,
-                  child: TextFormField(
-                      controller: _contentController,
-                      decoration:
-                          const InputDecoration(border: InputBorder.none),
-                      onEditingComplete: () async {
-                        snapshot.data!.content = _contentController.text;
-                        await editTodo(widget._todoId, _contentController.text,
-                            snapshot.data!.dueDate, isChecked);
-                      }),
-                ),
-                //////////////////////////////////
-                secondary: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    if (dDay == -2)
-                      Text('모레')
-                    else if (dDay == -1)
-                      Text('내일')
-                    else if (dDay == 0)
-                      Text('오늘')
-                    else if (dDay > 0)
-                      Text('D+$dDay')
-                    else
-                      Text('D$dDay'),
-                    Text('~' +
-                        DateFormat('MM/dd')
-                            .format(snapshot.data!.dueDate.toDate())),
-                  ],
-                ),
-                value: isChecked,
-                onChanged: (value) {
-                  //setState(() => isChecked = value);
-                }),
+            child: Dismissible(
+              background: Container(
+                alignment: Alignment.centerLeft,
+                padding: const EdgeInsets.only(left: 20.0),
+                color: Colors.red,
+                child: const Icon(Icons.delete),
+              ),
+              secondaryBackground: Container(
+                alignment: Alignment.centerRight,
+                padding: const EdgeInsets.only(right: 20.0),
+                color: Colors.red,
+                child: const Icon(Icons.delete),
+              ),
+              key: Key(widget._todoId),
+              onDismissed: (direction) {
+                deleteTodo(widget._todoId);
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(const SnackBar(content: Text('삭제됨!')));
+              },
+              child: CheckboxListTile(
+                  activeColor: Colors.black,
+                  title: Form(
+                    key: _formKey,
+                    child: TextFormField(
+                        controller: _contentController,
+                        decoration:
+                            const InputDecoration(border: InputBorder.none),
+                        onEditingComplete: () async {
+                          snapshot.data!.content = _contentController.text;
+                          await editTodoContent(
+                              widget._todoId, _contentController.text);
+                        }),
+                  ),
+                  secondary: TextButton(
+                    style: TextButton.styleFrom(primary: Colors.black),
+                    onPressed: () {
+                      Future<DateTime?> selectedDate = showDatePicker(
+                        context: context,
+                        initialDate: snapshot.data!.dueDate.toDate(),
+                        firstDate: DateTime(2020),
+                        lastDate: DateTime(2090),
+                      );
+                      selectedDate.then((dateTime) async {
+                        await editTodoDueDate(
+                            widget._todoId, Timestamp.fromDate(dateTime!));
+                      }).onError((error, stack) {});
+                    },
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        if (dDay == -2)
+                          const Text('모레')
+                        else if (dDay == -1)
+                          const Text(
+                            '내일',
+                            style: TextStyle(
+                                color: Colors.red, fontWeight: FontWeight.bold),
+                          )
+                        else if (dDay == 0)
+                          const Text(
+                            '오늘',
+                            style: TextStyle(
+                                color: Colors.red, fontWeight: FontWeight.bold),
+                          )
+                        else if (dDay > 0)
+                          Text('D+$dDay')
+                        else
+                          Text('D$dDay'),
+                        Text('~' +
+                            DateFormat('MM/dd')
+                                .format(snapshot.data!.dueDate.toDate())),
+                      ],
+                    ),
+                  ),
+                  value: isChecked,
+                  onChanged: (value) async {
+                    await editTodoComplete(widget._todoId, value!);
+                  }),
+            ),
           );
         });
   }

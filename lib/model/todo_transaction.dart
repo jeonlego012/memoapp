@@ -31,13 +31,32 @@ Future<Todo> getTodo(String todoId) async {
       .then((DocumentSnapshot doc) => Todo.fromSnapshot(doc));
 }
 
-Future<void> editTodo(
-    String todoId, String content, Timestamp? newTime, bool? complete) {
+Future<void> editTodoContent(String todoId, String newContent) {
   final firebaseTodo =
       FirebaseFirestore.instance.collection('todos').doc(todoId);
   return firebaseTodo.update({
-    'content': content,
-    'dueDate': newTime,
-    'complete': complete,
+    'content': newContent,
   });
+}
+
+Future<void> editTodoDueDate(String todoId, Timestamp newTime) {
+  final firebaseTodo =
+      FirebaseFirestore.instance.collection('todos').doc(todoId);
+  return firebaseTodo.update({
+    'dueDate': newTime,
+  });
+}
+
+Future<void> editTodoComplete(String todoId, bool newComplete) {
+  final firebaseTodo =
+      FirebaseFirestore.instance.collection('todos').doc(todoId);
+  return firebaseTodo.update({
+    'complete': newComplete,
+  });
+}
+
+Future<void> deleteTodo(String todoId) async {
+  final firebaseTodo =
+      FirebaseFirestore.instance.collection('todos').doc(todoId);
+  return firebaseTodo.delete();
 }

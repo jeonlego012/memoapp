@@ -50,13 +50,14 @@ class _TodoListState extends State<TodoList> {
       floatingActionButton: FloatingActionButton(
         //////////////////////////////////
         onPressed: () {
-          // Timestamp today = Timestamp.now();
-          // DateFormat formatter = DateFormat('yyyy-MM-dd');
-          // final String formatted = formatter.format(today.toDate());
+          Timestamp today = Timestamp.now();
+          DateFormat formatter = DateFormat('yyyy-MM-dd');
+          final String formatted = formatter.format(today.toDate());
+
           addTodo(
             Todo(
               content: "",
-              dueDate: Timestamp.now(),
+              dueDate: today, //Timestamp.fromDate(today),
               complete: false,
             ),
           );
