@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 
 import 'package:memoapp/model/todo.dart';
 import 'package:memoapp/model/todo_transaction.dart';
@@ -39,21 +40,7 @@ class _TodoListState extends State<TodoList> {
       children: [
         Expanded(
           child: ListView(
-            children: [
-              for (int i = 0; i < _todos.length; i++)
-                Padding(
-                  padding: const EdgeInsets.only(top: 16),
-                  child: FutureBuilder<ChildTodo>(
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.none &&
-                            snapshot.hasData == null) {
-                          return Container();
-                        }
-                        return Container(child: snapshot.data);
-                      },
-                      future: _buildChildTodo(_todos[i].id!)),
-                ),
-            ],
+            children: _buildTodoList(),
           ),
         ),
       ],
@@ -63,6 +50,9 @@ class _TodoListState extends State<TodoList> {
       floatingActionButton: FloatingActionButton(
         //////////////////////////////////
         onPressed: () {
+          // Timestamp today = Timestamp.now();
+          // DateFormat formatter = DateFormat('yyyy-MM-dd');
+          // final String formatted = formatter.format(today.toDate());
           addTodo(
             Todo(
               content: "",
@@ -78,20 +68,7 @@ class _TodoListState extends State<TodoList> {
     );
   }
 
-  // List<ChildTodo> _buildTodoList() {
-  //   final returnList =
-  //       _todos.map((_todo) => ChildTodo(todoId: _todo.id)).toList();
-  //   return returnList;
-  // }
-  // Future<List<ChildTodo>> _buildTodoList() async {
-  //   final returnList =
-  //       await _todos.map((_todo) => ChildTodo(todoId: _todo.id)).toList();
-  //   return returnList;
-  // }
-
-  //return ChileTodo
-  Future<ChildTodo> _buildChildTodo(String todoId) async {
-    final childTodo = await ChildTodo(todoId: todoId);
-    return childTodo;
+  List<ChildTodo> _buildTodoList() {
+    return _todos.map((_todo) => ChildTodo(todoId: _todo.id!)).toList();
   }
 }
