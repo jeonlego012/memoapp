@@ -99,7 +99,7 @@ class _MyTabState extends State<MyTab> with SingleTickerProviderStateMixin {
           children: [
             NoteList(),
             TodoList(),
-            Diary(),
+            DiaryList(),
             Archive(),
           ],
         ),
