@@ -13,6 +13,7 @@ Future<void> addTodo(Todo todo) {
 Stream<QuerySnapshot> loadAllTodos() {
   return FirebaseFirestore.instance
       .collection('todos')
+      .orderBy('complete')
       .orderBy('dueDate')
       .snapshots();
 }

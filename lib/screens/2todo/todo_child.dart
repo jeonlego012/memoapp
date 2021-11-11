@@ -33,8 +33,7 @@ class _ChildTodoState extends State<ChildTodo> {
           final _contentController =
               TextEditingController(text: snapshot.data!.content);
           final duedate = snapshot.data!.dueDate.toDate();
-          final today = DateTime.now();
-          final dDay = today.difference(duedate).inDays;
+          int dDay = calculateDday(duedate);
           bool? isChecked = snapshot.data!.complete;
           return Container(
             decoration: const BoxDecoration(
@@ -127,4 +126,12 @@ class _ChildTodoState extends State<ChildTodo> {
           );
         });
   }
+}
+
+int calculateDday(DateTime dueDate) {
+  DateTime todayDateTime = DateTime.now();
+  DateTime today = DateTime.utc(
+      todayDateTime.year, todayDateTime.month, todayDateTime.day, -9, 0);
+  int dDay = today.difference(dueDate).inDays;
+  return dDay;
 }
