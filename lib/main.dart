@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:memoapp/components/my_tab.dart';
 
 Future<void> main() async {
@@ -14,10 +14,15 @@ class MemoApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: const [Locale('ko', 'KR')],
       theme: ThemeData(
         primaryColor: Colors.white,
       ),
-      home: MyTab(),
+      home: const MyTab(),
     );
   }
 }

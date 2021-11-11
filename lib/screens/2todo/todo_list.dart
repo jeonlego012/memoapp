@@ -38,6 +38,13 @@ class _TodoListState extends State<TodoList> {
   Widget build(BuildContext context) {
     Widget todoBody = Column(
       children: [
+        Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Text(calculateTodayDate(),
+              style: const TextStyle(
+                fontSize: 30,
+              )),
+        ),
         Expanded(
           child: ListView(
             children: _buildTodoList(),
@@ -48,7 +55,6 @@ class _TodoListState extends State<TodoList> {
     return Scaffold(
       body: todoBody,
       floatingActionButton: FloatingActionButton(
-        //////////////////////////////////
         onPressed: () {
           DateTime todayDateTime = DateTime.now();
           Timestamp todayTimestamp = Timestamp.fromDate(DateTime.utc(
@@ -60,12 +66,11 @@ class _TodoListState extends State<TodoList> {
           addTodo(
             Todo(
               content: "",
-              dueDate: todayTimestamp, //Timestamp.fromDate(today),
+              dueDate: todayTimestamp,
               complete: false,
             ),
           );
         },
-        //////////////////////////////////
         child: const Icon(Icons.add),
         backgroundColor: Colors.green,
       ),
@@ -75,4 +80,12 @@ class _TodoListState extends State<TodoList> {
   List<ChildTodo> _buildTodoList() {
     return _todos.map((_todo) => ChildTodo(todoId: _todo.id!)).toList();
   }
+}
+
+String calculateTodayDate() {
+  DateTime todayDateTime = DateTime.now();
+  String todayString =
+      DateFormat('yyyy년 MM월 dd일 EEEE', 'ko').format(todayDateTime);
+
+  return todayString;
 }
