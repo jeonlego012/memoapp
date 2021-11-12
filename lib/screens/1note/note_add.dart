@@ -20,26 +20,24 @@ class _NoteAddScreenState extends State<NoteAddScreen> {
       padding: const EdgeInsets.all(8.0),
       child: Form(
         key: _formKey,
-        child: Container(
-          child: Column(
-            children: [
-              TextFormField(
-                controller: _titleController,
-                decoration: const InputDecoration(
-                  hintText: '제목',
-                ),
+        child: Column(
+          children: [
+            TextFormField(
+              controller: _titleController,
+              decoration: const InputDecoration(
+                hintText: '제목',
               ),
-              TextFormField(
-                controller: _contentController,
-                maxLines: null,
-                decoration: const InputDecoration(
-                  hintText: '내용',
-                  border: InputBorder.none,
-                ),
-                //validator:
+            ),
+            TextFormField(
+              controller: _contentController,
+              maxLines: null,
+              decoration: const InputDecoration(
+                hintText: '내용',
+                border: InputBorder.none,
               ),
-            ],
-          ),
+              //validator:
+            ),
+          ],
         ),
       ),
     );

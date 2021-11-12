@@ -9,3 +9,16 @@ Future<void> addDiary(Diary diary) {
     'date': diary.date,
   });
 }
+
+Stream<QuerySnapshot> loadAllDiarys() {
+  return FirebaseFirestore.instance
+      .collection('diarys')
+      .orderBy('date', descending: true)
+      .snapshots();
+}
+
+List<Diary> getDiarysFromQuery(QuerySnapshot snapshot) {
+  return snapshot.docs.map((DocumentSnapshot doc) {
+    return Diary.fromSnapshot(doc);
+  }).toList();
+}

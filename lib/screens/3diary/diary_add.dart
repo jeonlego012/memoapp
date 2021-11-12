@@ -22,42 +22,42 @@ class _DiaryAddScreenState extends State<DiaryAddScreen> {
       padding: const EdgeInsets.all(8.0),
       child: Form(
         key: _formKey,
-        child: Container(
-          child: Column(
-            children: [
-              TextButton(
-                child: const Text('날짜'),
-                onPressed: () {
-                  Future<DateTime?> selectedDate = showDatePicker(
-                    context: context,
-                    initialDate: DateTime.now(),
-                    firstDate: DateTime(2020),
-                    lastDate: DateTime(2090),
-                  );
-                  selectedDate.then((dateTime) {
-                    setState(() {
-                      diaryDate = dateTime;
-                      print("selected date is $diaryDate");
-                    });
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            TextButton.icon(
+              style: TextButton.styleFrom(primary: Colors.black),
+              icon: const Icon(Icons.date_range),
+              label: const Text("날짜 선택"),
+              onPressed: () {
+                Future<DateTime?> selectedDate = showDatePicker(
+                  context: context,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime(2020),
+                  lastDate: DateTime(2090),
+                );
+                selectedDate.then((dateTime) {
+                  setState(() {
+                    diaryDate = dateTime;
                   });
-                },
+                });
+              },
+            ),
+            TextFormField(
+              controller: _titleController,
+              decoration: const InputDecoration(
+                hintText: '제목',
               ),
-              TextFormField(
-                controller: _titleController,
-                decoration: const InputDecoration(
-                  hintText: '제목',
-                ),
+            ),
+            TextFormField(
+              controller: _contentController,
+              maxLines: null,
+              decoration: const InputDecoration(
+                hintText: '내용',
+                border: InputBorder.none,
               ),
-              TextFormField(
-                controller: _contentController,
-                maxLines: null,
-                decoration: const InputDecoration(
-                  hintText: '내용',
-                  border: InputBorder.none,
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

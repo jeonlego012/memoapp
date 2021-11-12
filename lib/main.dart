@@ -18,7 +18,10 @@ class MemoApp extends StatelessWidget {
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
-      supportedLocales: const [Locale('ko', 'KR')],
+      supportedLocales: const [
+        Locale('ko', 'KR'),
+        Locale('en', 'US'),
+      ],
       theme: ThemeData(
         primaryColor: Colors.white,
       ),
