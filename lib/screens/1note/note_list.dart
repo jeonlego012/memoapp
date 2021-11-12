@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:memoapp/model/note.dart';
 import 'package:memoapp/model/note_transaction.dart';
+import 'package:memoapp/components/search_box.dart';
 import 'note_add.dart';
 import 'note_child.dart';
 
@@ -49,7 +50,7 @@ class _NoteListState extends State<NoteList> {
   Widget build(BuildContext context) {
     Widget noteBody = Column(
       children: [
-        buildSearchBox(),
+        searchBox(_searchController),
         Expanded(
           child: ListView(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -61,6 +62,7 @@ class _NoteListState extends State<NoteList> {
     return Scaffold(
       body: noteBody,
       floatingActionButton: FloatingActionButton(
+        heroTag: const Text('note'),
         onPressed: () {
           Navigator.push(
             context,
@@ -69,27 +71,6 @@ class _NoteListState extends State<NoteList> {
         },
         child: const Icon(Icons.add),
         backgroundColor: Colors.orange,
-      ),
-    );
-  }
-
-  Container buildSearchBox() {
-    return Container(
-      height: 40.0,
-      margin: const EdgeInsets.all(10.0),
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(
-          Radius.circular(20.0),
-        ),
-        color: Colors.grey.withOpacity(0.4),
-      ),
-      child: TextField(
-        controller: _searchController,
-        decoration: const InputDecoration(
-          border: InputBorder.none,
-          prefixIcon: Icon(Icons.search),
-          hintText: "검색",
-        ),
       ),
     );
   }

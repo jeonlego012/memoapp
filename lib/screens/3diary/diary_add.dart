@@ -14,7 +14,7 @@ class _DiaryAddScreenState extends State<DiaryAddScreen> {
   final _formKey = GlobalKey<FormState>(debugLabel: '_DiaryAddScreenState');
   final _titleController = TextEditingController();
   final _contentController = TextEditingController();
-  DateTime? diaryDate;
+  DateTime diaryDate = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
@@ -25,23 +25,28 @@ class _DiaryAddScreenState extends State<DiaryAddScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            TextButton.icon(
-              style: TextButton.styleFrom(primary: Colors.black),
-              icon: const Icon(Icons.date_range),
-              label: const Text("날짜 선택"),
-              onPressed: () {
-                Future<DateTime?> selectedDate = showDatePicker(
-                  context: context,
-                  initialDate: DateTime.now(),
-                  firstDate: DateTime(2020),
-                  lastDate: DateTime(2090),
-                );
-                selectedDate.then((dateTime) {
-                  setState(() {
-                    diaryDate = dateTime;
-                  });
-                });
-              },
+            Row(
+              children: [
+                TextButton.icon(
+                  style: TextButton.styleFrom(primary: Colors.black),
+                  icon: const Icon(Icons.date_range),
+                  label: const Text("날짜 선택"),
+                  onPressed: () {
+                    Future<DateTime?> selectedDate = showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(2020),
+                      lastDate: DateTime(2090),
+                    );
+                    selectedDate.then((dateTime) {
+                      setState(() {
+                        diaryDate = dateTime!;
+                      });
+                    }).onError((error, stack) {});
+                  },
+                ),
+                Text(DateFormat('yyyy년 MM월 dd일').format(diaryDate)),
+              ],
             ),
             TextFormField(
               controller: _titleController,
@@ -71,13 +76,14 @@ class _DiaryAddScreenState extends State<DiaryAddScreen> {
                 Diary(
                   title: _titleController.text,
                   content: _contentController.text,
-                  date: Timestamp.fromDate(diaryDate!),
+                  date: Timestamp.fromDate(diaryDate),
                 ),
               );
             }
             Navigator.pop(context);
           },
         ),
+        elevation: 0.0,
       ),
       body: bodySection,
     );

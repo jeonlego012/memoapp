@@ -22,3 +22,28 @@ List<Diary> getDiarysFromQuery(QuerySnapshot snapshot) {
     return Diary.fromSnapshot(doc);
   }).toList();
 }
+
+Future<Diary> getDiary(String diaryId) async {
+  return FirebaseFirestore.instance
+      .collection('diarys')
+      .doc(diaryId)
+      .get()
+      .then((DocumentSnapshot doc) => Diary.fromSnapshot(doc));
+}
+
+Future<void> editDiary(
+    String diaryId, String title, String content, Timestamp date) {
+  final firebaseDiary =
+      FirebaseFirestore.instance.collection('diarys').doc(diaryId);
+  return firebaseDiary.update({
+    'title': title,
+    'content': content,
+    'date': date,
+  });
+}
+
+Future<void> deleteDiary(String diaryId) {
+  final firebaseDiary =
+      FirebaseFirestore.instance.collection('diarys').doc(diaryId);
+  return firebaseDiary.delete();
+}

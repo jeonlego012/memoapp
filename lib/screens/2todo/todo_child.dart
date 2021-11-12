@@ -21,6 +21,8 @@ class ChildTodo extends StatefulWidget {
 class _ChildTodoState extends State<ChildTodo> {
   final _formKey = GlobalKey<FormState>(debugLabel: '_ChildTodoState');
 
+  Todo? _todo;
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<Todo>(
@@ -30,11 +32,12 @@ class _ChildTodoState extends State<ChildTodo> {
               snapshot.hasData == false) {
             return const Center();
           }
+          _todo = snapshot.data;
           final _contentController =
-              TextEditingController(text: snapshot.data!.content);
-          final duedate = snapshot.data!.dueDate.toDate();
+              TextEditingController(text: _todo!.content);
+          final duedate = _todo!.dueDate.toDate();
           int dDay = calculateDday(duedate);
-          bool? isChecked = snapshot.data!.complete;
+          bool? isChecked = _todo!.complete;
           return Container(
             decoration: const BoxDecoration(
               border: Border(
@@ -72,7 +75,7 @@ class _ChildTodoState extends State<ChildTodo> {
                         decoration:
                             const InputDecoration(border: InputBorder.none),
                         onEditingComplete: () async {
-                          snapshot.data!.content = _contentController.text;
+                          _todo!.content = _contentController.text;
                           await editTodoContent(
                               widget._todoId, _contentController.text);
                         }),
@@ -82,7 +85,7 @@ class _ChildTodoState extends State<ChildTodo> {
                     onPressed: () {
                       Future<DateTime?> selectedDate = showDatePicker(
                         context: context,
-                        initialDate: snapshot.data!.dueDate.toDate(),
+                        initialDate: _todo!.dueDate.toDate(),
                         firstDate: DateTime(2020),
                         lastDate: DateTime(2090),
                       );
@@ -114,7 +117,7 @@ class _ChildTodoState extends State<ChildTodo> {
                           Text('D$dDay'),
                         Text('~' +
                             DateFormat('MM/dd')
-                                .format(snapshot.data!.dueDate.toDate())),
+                                .format(_todo!.dueDate.toDate())),
                       ],
                     ),
                   ),

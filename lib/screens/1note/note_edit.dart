@@ -13,86 +13,81 @@ class NoteEditScreen extends StatefulWidget {
 
   final String _noteId;
   @override
-  _NoteEditScreenState createState() => _NoteEditScreenState(noteId: _noteId);
+  _NoteEditScreenState createState() => _NoteEditScreenState();
 }
 
 class _NoteEditScreenState extends State<NoteEditScreen> {
   final _formKey = GlobalKey<FormState>(debugLabel: '_NoteEditScreenState');
 
   Note? _note;
-  bool _isLoading = true;
-
-  _NoteEditScreenState({@required String? noteId}) {
-    getNote(noteId!).then((Note note) {
-      setState(() {
-        _note = note;
-        _isLoading = false;
-      });
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
-    final _titleController =
-        TextEditingController(text: _isLoading ? null : _note!.title);
-    final _contentController =
-        TextEditingController(text: _isLoading ? null : _note!.content);
-    Widget textSection = SingleChildScrollView(
-      padding: const EdgeInsets.all(8.0),
-      child: Form(
-        key: _formKey,
-        child: Container(
-          child: Column(
-            children: [
-              TextFormField(
-                controller: _titleController,
-                decoration: const InputDecoration(
-                  hintText: '제목',
-                ),
+    return FutureBuilder<Note>(
+        future: getNote(widget._noteId),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.none ||
+              snapshot.hasData == false) {
+            return const Center();
+          }
+          _note = snapshot.data;
+          final _titleController = TextEditingController(text: _note!.title);
+          final _contentController =
+              TextEditingController(text: _note!.content);
+          Widget textSection = SingleChildScrollView(
+            padding: const EdgeInsets.all(8.0),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  TextFormField(
+                    controller: _titleController,
+                    decoration: const InputDecoration(
+                      hintText: '제목',
+                    ),
+                  ),
+                  TextFormField(
+                    controller: _contentController,
+                    maxLines: null,
+                    decoration: const InputDecoration(
+                      hintText: '내용',
+                      border: InputBorder.none,
+                    ),
+                  ),
+                ],
               ),
-              TextFormField(
-                controller: _contentController,
-                maxLines: null,
-                decoration: const InputDecoration(
-                  hintText: '내용',
-                  border: InputBorder.none,
-                ),
-                //validator:
+            ),
+          );
+          return Scaffold(
+            appBar: AppBar(
+              leading: BackButton(
+                onPressed: () async {
+                  if (_formKey.currentState!.validate() &&
+                      _titleController.text != "") {
+                    Timestamp createdTime = Timestamp.now();
+                    editNote(
+                      widget._noteId,
+                      _titleController.text,
+                      _contentController.text,
+                      createdTime,
+                    );
+                  }
+                  Navigator.pop(context);
+                },
               ),
-            ],
-          ),
-        ),
-      ),
-    );
-    return Scaffold(
-      appBar: AppBar(
-        leading: BackButton(
-          onPressed: () async {
-            if (_formKey.currentState!.validate() &&
-                _titleController.text != "") {
-              Timestamp createdTime = Timestamp.now();
-              editNote(
-                widget._noteId,
-                _titleController.text,
-                _contentController.text,
-                createdTime,
-              );
-            }
-            Navigator.pop(context);
-          },
-        ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.delete),
-            onPressed: () {
-              deleteNote(widget._noteId);
-              Navigator.pop(context);
-            },
-          ),
-        ],
-        elevation: 0.0,
-      ),
-      body: textSection,
-    );
+              actions: [
+                IconButton(
+                  icon: const Icon(Icons.delete),
+                  onPressed: () {
+                    deleteNote(widget._noteId);
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+              elevation: 0.0,
+            ),
+            body: textSection,
+          );
+        });
   }
 }
