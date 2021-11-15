@@ -5,12 +5,14 @@ class Archive {
   String content;
   String? sayer;
   Timestamp creationTime;
+  bool isFavorite;
   final DocumentReference? reference;
 
   Archive({
     required this.content,
     required this.sayer,
     required this.creationTime,
+    required this.isFavorite,
   })  : id = null,
         reference = null;
 
@@ -20,5 +22,6 @@ class Archive {
         content = snapshot['content'],
         sayer = snapshot['sayer'],
         creationTime = snapshot['creationTime'],
+        isFavorite = snapshot['isFavorite'],
         reference = snapshot.reference;
 }

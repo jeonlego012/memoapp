@@ -67,7 +67,7 @@ class _ChildTodoState extends State<ChildTodo> {
                     .showSnackBar(const SnackBar(content: Text('삭제됨!')));
               },
               child: CheckboxListTile(
-                  activeColor: Colors.black,
+                  activeColor: Colors.green.withOpacity(0.8),
                   title: Form(
                     key: _formKey,
                     child: TextFormField(

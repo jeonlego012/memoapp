@@ -15,7 +15,7 @@ Container searchBox(TextEditingController searchController, Color mainColor) {
       decoration: const InputDecoration(
         border: InputBorder.none,
         prefixIcon: Icon(Icons.search),
-        hintText: "검색",
+        hintText: "Search",
       ),
     ),
   );

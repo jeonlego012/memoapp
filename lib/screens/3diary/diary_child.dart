@@ -23,12 +23,12 @@ class ChildDiary extends StatelessWidget {
           leading: Column(
             children: [
               Text(diary.date.toDate().year.toString(),
-                  style: const TextStyle(color: Colors.grey, fontSize: 10.0)),
+                  style: const TextStyle(color: Colors.grey, fontSize: 11.0)),
               Text(
                 diary.date.toDate().month.toString() + '월',
               ),
               Text(diary.date.toDate().day.toString(),
-                  style: const TextStyle(fontSize: 20.0)),
+                  style: const TextStyle(fontSize: 18.0)),
             ],
           ),
           title: Text(diary.title),

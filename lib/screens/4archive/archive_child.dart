@@ -27,22 +27,15 @@ class ChildArchive extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 10.0),
         decoration: BoxDecoration(
           color: Colors.white,
-          // border: Border.all(
-          //   width: 0.4,
-          //   color: Colors.black,
-          // ),
-          borderRadius: const BorderRadius.all(Radius.circular(10)),
-          boxShadow: [
-            BoxShadow(
-              offset: const Offset(0, 10),
-              blurRadius: 10,
-              color: Colors.red.withOpacity(0.2),
-            ),
-          ],
+          border: Border.all(
+            width: 0.7,
+            color: Colors.red.withOpacity(0.8),
+          ),
+          //borderRadius: const BorderRadius.all(Radius.circular(10)),
         ),
         margin: const EdgeInsets.symmetric(
-          vertical: 20.0,
-          horizontal: 40.0,
+          vertical: 10.0,
+          horizontal: 26.0,
         ),
         width: size.width * 0.8,
         child: Column(

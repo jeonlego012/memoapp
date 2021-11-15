@@ -7,13 +7,14 @@ Future<void> addArchive(Archive archive) {
     'content': archive.content,
     'sayer': archive.sayer,
     'creationTime': archive.creationTime,
+    'isFavorite': archive.isFavorite,
   });
 }
 
 Stream<QuerySnapshot> loadAllArchives() {
   return FirebaseFirestore.instance
       .collection('archives')
-      .orderBy('order', descending: true)
+      .orderBy('creationTime', descending: true)
       .snapshots();
 }
 
