@@ -31,13 +31,16 @@ Future<Diary> getDiary(String diaryId) async {
       .then((DocumentSnapshot doc) => Diary.fromSnapshot(doc));
 }
 
-Future<void> editDiary(
-    String diaryId, String title, String content, Timestamp date) {
+Future<void> editDiary(String diaryId, String title, String content) {
+  final firebaseDiary =
+      FirebaseFirestore.instance.collection('diarys').doc(diaryId);
+  return firebaseDiary.update({'title': title, 'content': content});
+}
+
+Future<void> editDiaryDate(String diaryId, Timestamp date) {
   final firebaseDiary =
       FirebaseFirestore.instance.collection('diarys').doc(diaryId);
   return firebaseDiary.update({
-    'title': title,
-    'content': content,
     'date': date,
   });
 }

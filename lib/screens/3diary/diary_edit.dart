@@ -49,7 +49,7 @@ class _DiaryEditScreenState extends State<DiaryEditScreen> {
                         style: TextButton.styleFrom(primary: Colors.black),
                         icon: const Icon(Icons.date_range),
                         label: const Text("날짜 선택"),
-                        onPressed: () {
+                        onPressed: () async {
                           Future<DateTime?> selectedDate = showDatePicker(
                             context: context,
                             initialDate: _diary!.date.toDate(),
@@ -59,8 +59,10 @@ class _DiaryEditScreenState extends State<DiaryEditScreen> {
                           selectedDate.then((dateTime) {
                             setState(() {
                               editedDate = dateTime;
+                              editDiaryDate(widget._diaryId,
+                                  Timestamp.fromDate(editedDate!));
                             });
-                          });
+                          }).onError((error, stack) {});
                         },
                       ),
                       Text(DateFormat('yyyy년 MM월 dd일').format(editedDate!)),
@@ -86,15 +88,19 @@ class _DiaryEditScreenState extends State<DiaryEditScreen> {
           );
           return Scaffold(
             appBar: AppBar(
-              leading: BackButton(onPressed: () async {
-                if (_formKey.currentState!.validate() &&
-                    _titleController.text != "") {
-                  print(editedDate);
-                  editDiary(widget._diaryId, _titleController.text,
-                      _contentController.text, Timestamp.fromDate(editedDate!));
-                }
-                Navigator.pop(context);
-              }),
+              leading: BackButton(
+                onPressed: () async {
+                  if (_formKey.currentState!.validate() &&
+                      _titleController.text != "") {
+                    editDiary(
+                      widget._diaryId,
+                      _titleController.text,
+                      _contentController.text,
+                    );
+                  }
+                  Navigator.pop(context);
+                },
+              ),
               actions: [
                 IconButton(
                     icon: const Icon(Icons.delete),
