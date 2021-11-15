@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'archive_add.dart';
+
 class Archive extends StatelessWidget {
   const Archive({Key? key}) : super(key: key);
   @override
@@ -7,7 +9,12 @@ class Archive extends StatelessWidget {
     return Scaffold(
       //body: Icon(Icons.create),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => ArchiveAddScreen()),
+          );
+        },
         child: Icon(Icons.add),
         backgroundColor: Colors.pink,
       ),

@@ -35,7 +35,6 @@ class _NoteAddScreenState extends State<NoteAddScreen> {
                 hintText: '내용',
                 border: InputBorder.none,
               ),
-              //validator:
             ),
           ],
         ),
