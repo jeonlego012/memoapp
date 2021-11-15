@@ -7,9 +7,11 @@ class Archive {
   Timestamp creationTime;
   final DocumentReference? reference;
 
-  Archive(
-      {required this.content, required this.sayer, required this.creationTime})
-      : id = null,
+  Archive({
+    required this.content,
+    required this.sayer,
+    required this.creationTime,
+  })  : id = null,
         reference = null;
 
   Archive.fromSnapshot(DocumentSnapshot snapshot)

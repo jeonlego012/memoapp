@@ -38,12 +38,25 @@ class _TodoListState extends State<TodoList> {
   Widget build(BuildContext context) {
     Widget todoBody = Column(
       children: [
-        Padding(
+        Container(
+          // margin: EdgeInsets.only(top: 20.0, bottom: 10.0),
+          // decoration: BoxDecoration(
+          //     border: Border(
+          //         bottom: BorderSide(color: Colors.green),
+          //         top: BorderSide(color: Colors.green))),
+
           padding: const EdgeInsets.all(20.0),
-          child: Text(calculateTodayDate(),
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.green.withOpacity(0.5),
+            ),
+            child: Text(
+              calculateTodayDate(),
               style: const TextStyle(
                 fontSize: 30,
-              )),
+              ),
+            ),
+          ),
         ),
         Expanded(
           child: ListView(

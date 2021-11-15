@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Container searchBox(TextEditingController searchController) {
+Container searchBox(TextEditingController searchController, Color mainColor) {
   return Container(
     height: 40.0,
     margin: const EdgeInsets.all(10.0),
@@ -8,7 +8,7 @@ Container searchBox(TextEditingController searchController) {
       borderRadius: const BorderRadius.all(
         Radius.circular(20.0),
       ),
-      color: Colors.grey.withOpacity(0.4),
+      color: mainColor.withOpacity(0.4),
     ),
     child: TextField(
       controller: searchController,

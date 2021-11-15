@@ -16,7 +16,7 @@ class _ArchiveAddScreenState extends State<ArchiveAddScreen> {
   @override
   Widget build(BuildContext context) {
     Widget textSection = SingleChildScrollView(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(10.0),
       child: Column(
         children: [
           TextField(

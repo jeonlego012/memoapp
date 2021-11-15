@@ -100,7 +100,7 @@ class _MyTabState extends State<MyTab> with SingleTickerProviderStateMixin {
             NoteList(),
             TodoList(),
             DiaryList(),
-            Archive(),
+            ArchiveList(),
           ],
         ),
       ),

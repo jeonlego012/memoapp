@@ -50,7 +50,7 @@ class _DiaryListState extends State<DiaryList> {
   Widget build(BuildContext context) {
     Widget diaryBody = Column(
       children: [
-        searchBox(_searchController),
+        searchBox(_searchController, Colors.blue),
         Expanded(
           child: ListView(
             padding: const EdgeInsets.symmetric(vertical: 8.0),

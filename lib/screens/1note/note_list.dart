@@ -50,7 +50,7 @@ class _NoteListState extends State<NoteList> {
   Widget build(BuildContext context) {
     Widget noteBody = Column(
       children: [
-        searchBox(_searchController),
+        searchBox(_searchController, Colors.orange),
         Expanded(
           child: ListView(
             padding: const EdgeInsets.symmetric(vertical: 8.0),

@@ -42,8 +42,8 @@ Future<void> editNote(
   });
 }
 
-Future<void> deleteNote(String noteId) async {
+Future<void> deleteNote(String noteId) {
   final firebaseNote =
       FirebaseFirestore.instance.collection('notes').doc(noteId);
-  firebaseNote.delete();
+  return firebaseNote.delete();
 }

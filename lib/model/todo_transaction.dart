@@ -56,7 +56,7 @@ Future<void> editTodoComplete(String todoId, bool newComplete) {
   });
 }
 
-Future<void> deleteTodo(String todoId) async {
+Future<void> deleteTodo(String todoId) {
   final firebaseTodo =
       FirebaseFirestore.instance.collection('todos').doc(todoId);
   return firebaseTodo.delete();

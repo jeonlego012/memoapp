@@ -37,7 +37,7 @@ class _DiaryEditScreenState extends State<DiaryEditScreen> {
               TextEditingController(text: _diary!.content);
           DateTime? editedDate = _diary!.date.toDate();
           Widget bodySection = SingleChildScrollView(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(10.0),
             child: Form(
               key: _formKey,
               child: Column(

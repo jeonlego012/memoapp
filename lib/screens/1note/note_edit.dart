@@ -7,7 +7,7 @@ import 'package:memoapp/model/note_transaction.dart';
 class NoteEditScreen extends StatefulWidget {
   NoteEditScreen({
     Key? key,
-    @required String? noteId,
+    required String? noteId,
   })  : _noteId = noteId!,
         super(key: key);
 
@@ -35,7 +35,7 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
           final _contentController =
               TextEditingController(text: _note!.content);
           Widget textSection = SingleChildScrollView(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(10.0),
             child: Form(
               key: _formKey,
               child: Column(
@@ -64,12 +64,12 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
                 onPressed: () async {
                   if (_formKey.currentState!.validate() &&
                       _titleController.text != "") {
-                    Timestamp createdTime = Timestamp.now();
+                    Timestamp editedTime = Timestamp.now();
                     editNote(
                       widget._noteId,
                       _titleController.text,
                       _contentController.text,
-                      createdTime,
+                      editedTime,
                     );
                   }
                   Navigator.pop(context);

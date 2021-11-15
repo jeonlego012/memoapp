@@ -19,7 +19,7 @@ class _DiaryAddScreenState extends State<DiaryAddScreen> {
   @override
   Widget build(BuildContext context) {
     Widget bodySection = SingleChildScrollView(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(10.0),
       child: Form(
         key: _formKey,
         child: Column(
