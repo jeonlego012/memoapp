@@ -2,4 +2,4 @@
 
 flutter memo app
 
-inspired by yoonsehyuk
+designed by yoonsehyuk
