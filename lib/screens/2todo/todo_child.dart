@@ -19,8 +19,6 @@ class ChildTodo extends StatefulWidget {
 }
 
 class _ChildTodoState extends State<ChildTodo> {
-  final _formKey = GlobalKey<FormState>(debugLabel: '_ChildTodoState');
-
   Todo? _todo;
 
   @override
@@ -35,8 +33,8 @@ class _ChildTodoState extends State<ChildTodo> {
           _todo = snapshot.data;
           final _contentController =
               TextEditingController(text: _todo!.content);
-          final duedate = _todo!.dueDate.toDate();
-          int dDay = calculateDday(duedate);
+          final _dueDate = _todo!.dueDate.toDate();
+          int dDay = calculateDday(_dueDate);
           bool? isChecked = _todo!.complete;
           return Container(
             decoration: const BoxDecoration(
@@ -68,18 +66,15 @@ class _ChildTodoState extends State<ChildTodo> {
               },
               child: CheckboxListTile(
                   activeColor: Colors.green.withOpacity(0.8),
-                  title: Form(
-                    key: _formKey,
-                    child: TextFormField(
-                        controller: _contentController,
-                        decoration:
-                            const InputDecoration(border: InputBorder.none),
-                        onEditingComplete: () async {
-                          _todo!.content = _contentController.text;
-                          await editTodoContent(
-                              widget._todoId, _contentController.text);
-                        }),
-                  ),
+                  title: TextField(
+                      controller: _contentController,
+                      decoration:
+                          const InputDecoration(border: InputBorder.none),
+                      onEditingComplete: () async {
+                        _todo!.content = _contentController.text;
+                        await editTodoContent(
+                            widget._todoId, _contentController.text);
+                      }),
                   secondary: TextButton(
                     style: TextButton.styleFrom(primary: Colors.black),
                     onPressed: () {

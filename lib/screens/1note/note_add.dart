@@ -10,7 +10,6 @@ class NoteAddScreen extends StatefulWidget {
 }
 
 class _NoteAddScreenState extends State<NoteAddScreen> {
-  final _formKey = GlobalKey<FormState>(debugLabel: '_NoteAddScreenState');
   final _titleController = TextEditingController();
   final _contentController = TextEditingController();
 
@@ -18,34 +17,30 @@ class _NoteAddScreenState extends State<NoteAddScreen> {
   Widget build(BuildContext context) {
     Widget textSection = SingleChildScrollView(
       padding: const EdgeInsets.all(10.0),
-      child: Form(
-        key: _formKey,
-        child: Column(
-          children: [
-            TextFormField(
-              controller: _titleController,
-              decoration: const InputDecoration(
-                hintText: '제목',
-              ),
+      child: Column(
+        children: [
+          TextField(
+            controller: _titleController,
+            decoration: const InputDecoration(
+              hintText: '제목',
             ),
-            TextFormField(
-              controller: _contentController,
-              maxLines: null,
-              decoration: const InputDecoration(
-                hintText: '내용',
-                border: InputBorder.none,
-              ),
+          ),
+          TextField(
+            controller: _contentController,
+            maxLines: null,
+            decoration: const InputDecoration(
+              hintText: '내용',
+              border: InputBorder.none,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
     return Scaffold(
       appBar: AppBar(
         leading: BackButton(
           onPressed: () async {
-            if (_formKey.currentState!.validate() &&
-                _titleController.text != "") {
+            if (_titleController.text != "") {
               Timestamp createdTime = Timestamp.now();
               addNote(
                 Note(

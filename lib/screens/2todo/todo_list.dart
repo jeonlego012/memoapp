@@ -39,12 +39,6 @@ class _TodoListState extends State<TodoList> {
     Widget todoBody = Column(
       children: [
         Container(
-          // margin: EdgeInsets.only(top: 20.0, bottom: 10.0),
-          // decoration: BoxDecoration(
-          //     border: Border(
-          //         bottom: BorderSide(color: Colors.green),
-          //         top: BorderSide(color: Colors.green))),
-
           padding: const EdgeInsets.all(20.0),
           child: Container(
             decoration: BoxDecoration(

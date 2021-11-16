@@ -22,16 +22,16 @@ class _ArchiveListState extends State<ArchiveList> {
     _currentSubscription = loadAllArchives().listen(_updateArchives);
   }
 
-  void _updateArchives(QuerySnapshot snapshot) {
-    setState(() {
-      _archives = getArchivesFromQuery(snapshot);
-    });
-  }
-
   @override
   void dispose() {
     _currentSubscription!.cancel();
     super.dispose();
+  }
+
+  void _updateArchives(QuerySnapshot snapshot) {
+    setState(() {
+      _archives = getArchivesFromQuery(snapshot);
+    });
   }
 
   @override

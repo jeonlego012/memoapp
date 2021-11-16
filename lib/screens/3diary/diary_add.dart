@@ -11,7 +11,6 @@ class DiaryAddScreen extends StatefulWidget {
 }
 
 class _DiaryAddScreenState extends State<DiaryAddScreen> {
-  final _formKey = GlobalKey<FormState>(debugLabel: '_DiaryAddScreenState');
   final _titleController = TextEditingController();
   final _contentController = TextEditingController();
   DateTime diaryDate = DateTime.now();
@@ -20,58 +19,54 @@ class _DiaryAddScreenState extends State<DiaryAddScreen> {
   Widget build(BuildContext context) {
     Widget bodySection = SingleChildScrollView(
       padding: const EdgeInsets.all(10.0),
-      child: Form(
-        key: _formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Row(
-              children: [
-                TextButton.icon(
-                  style: TextButton.styleFrom(primary: Colors.black),
-                  icon: const Icon(Icons.date_range),
-                  label: const Text("날짜 선택"),
-                  onPressed: () {
-                    Future<DateTime?> selectedDate = showDatePicker(
-                      context: context,
-                      initialDate: DateTime.now(),
-                      firstDate: DateTime(2020),
-                      lastDate: DateTime(2090),
-                    );
-                    selectedDate.then((dateTime) {
-                      setState(() {
-                        diaryDate = dateTime!;
-                      });
-                    }).onError((error, stack) {});
-                  },
-                ),
-                Text(DateFormat('yyyy년 MM월 dd일').format(diaryDate)),
-              ],
-            ),
-            TextFormField(
-              controller: _titleController,
-              decoration: const InputDecoration(
-                hintText: '제목',
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Row(
+            children: [
+              TextButton.icon(
+                style: TextButton.styleFrom(primary: Colors.black),
+                icon: const Icon(Icons.date_range),
+                label: const Text("날짜 선택"),
+                onPressed: () {
+                  Future<DateTime?> selectedDate = showDatePicker(
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime(2020),
+                    lastDate: DateTime(2090),
+                  );
+                  selectedDate.then((dateTime) {
+                    setState(() {
+                      diaryDate = dateTime!;
+                    });
+                  }).onError((error, stack) {});
+                },
               ),
+              Text(DateFormat('yyyy년 MM월 dd일').format(diaryDate)),
+            ],
+          ),
+          TextField(
+            controller: _titleController,
+            decoration: const InputDecoration(
+              hintText: '제목',
             ),
-            TextFormField(
-              controller: _contentController,
-              maxLines: null,
-              decoration: const InputDecoration(
-                hintText: '내용',
-                border: InputBorder.none,
-              ),
+          ),
+          TextField(
+            controller: _contentController,
+            maxLines: null,
+            decoration: const InputDecoration(
+              hintText: '내용',
+              border: InputBorder.none,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
     return Scaffold(
       appBar: AppBar(
         leading: BackButton(
           onPressed: () async {
-            if (_formKey.currentState!.validate() &&
-                _titleController.text != "") {
+            if (_titleController.text != "") {
               addDiary(
                 Diary(
                   title: _titleController.text,

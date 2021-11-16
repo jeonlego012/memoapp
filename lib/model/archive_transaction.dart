@@ -7,7 +7,6 @@ Future<void> addArchive(Archive archive) {
     'content': archive.content,
     'sayer': archive.sayer,
     'creationTime': archive.creationTime,
-    'isFavorite': archive.isFavorite,
   });
 }
 

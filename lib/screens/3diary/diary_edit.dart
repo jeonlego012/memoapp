@@ -18,8 +18,6 @@ class DiaryEditScreen extends StatefulWidget {
 }
 
 class _DiaryEditScreenState extends State<DiaryEditScreen> {
-  final _formKey = GlobalKey<FormState>(debugLabel: '_DiaryEditScreenState');
-
   Diary? _diary;
 
   @override
@@ -38,60 +36,56 @@ class _DiaryEditScreenState extends State<DiaryEditScreen> {
           DateTime? editedDate = _diary!.date.toDate();
           Widget bodySection = SingleChildScrollView(
             padding: const EdgeInsets.all(10.0),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Row(
-                    children: [
-                      TextButton.icon(
-                        style: TextButton.styleFrom(primary: Colors.black),
-                        icon: const Icon(Icons.date_range),
-                        label: const Text("날짜 선택"),
-                        onPressed: () async {
-                          Future<DateTime?> selectedDate = showDatePicker(
-                            context: context,
-                            initialDate: _diary!.date.toDate(),
-                            firstDate: DateTime(2020),
-                            lastDate: DateTime(2090),
-                          );
-                          selectedDate.then((dateTime) {
-                            setState(() {
-                              editedDate = dateTime;
-                              editDiaryDate(widget._diaryId,
-                                  Timestamp.fromDate(editedDate!));
-                            });
-                          }).onError((error, stack) {});
-                        },
-                      ),
-                      Text(DateFormat('yyyy년 MM월 dd일').format(editedDate!)),
-                    ],
-                  ),
-                  TextFormField(
-                    controller: _titleController,
-                    decoration: const InputDecoration(
-                      hintText: '제목',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Row(
+                  children: [
+                    TextButton.icon(
+                      style: TextButton.styleFrom(primary: Colors.black),
+                      icon: const Icon(Icons.date_range),
+                      label: const Text("날짜 선택"),
+                      onPressed: () async {
+                        Future<DateTime?> selectedDate = showDatePicker(
+                          context: context,
+                          initialDate: _diary!.date.toDate(),
+                          firstDate: DateTime(2020),
+                          lastDate: DateTime(2090),
+                        );
+                        selectedDate.then((dateTime) {
+                          setState(() {
+                            editedDate = dateTime;
+                            editDiaryDate(widget._diaryId,
+                                Timestamp.fromDate(editedDate!));
+                          });
+                        }).onError((error, stack) {});
+                      },
                     ),
+                    Text(DateFormat('yyyy년 MM월 dd일').format(editedDate!)),
+                  ],
+                ),
+                TextField(
+                  controller: _titleController,
+                  decoration: const InputDecoration(
+                    hintText: '제목',
                   ),
-                  TextFormField(
-                    controller: _contentController,
-                    maxLines: null,
-                    decoration: const InputDecoration(
-                      hintText: '내용',
-                      border: InputBorder.none,
-                    ),
+                ),
+                TextField(
+                  controller: _contentController,
+                  maxLines: null,
+                  decoration: const InputDecoration(
+                    hintText: '내용',
+                    border: InputBorder.none,
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           );
           return Scaffold(
             appBar: AppBar(
               leading: BackButton(
                 onPressed: () async {
-                  if (_formKey.currentState!.validate() &&
-                      _titleController.text != "") {
+                  if (_titleController.text != "") {
                     editDiary(
                       widget._diaryId,
                       _titleController.text,

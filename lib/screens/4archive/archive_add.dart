@@ -47,7 +47,6 @@ class _ArchiveAddScreenState extends State<ArchiveAddScreen> {
                   content: _contentController.text,
                   sayer: _sayerController.text,
                   creationTime: createdTime,
-                  isFavorite: false,
                 ),
               );
             }
