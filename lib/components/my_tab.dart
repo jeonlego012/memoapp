@@ -20,6 +20,18 @@ class _MyTabState extends State<MyTab> with SingleTickerProviderStateMixin {
     Colors.pink,
   ];
 
+  Tab buildTap(int index, String title) {
+    return Tab(
+      child: Text(
+        title,
+        style: TextStyle(
+          fontSize: 20.0,
+          color: _tabController.index == index ? tabColors[index] : Colors.grey,
+        ),
+      ),
+    );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -50,46 +62,10 @@ class _MyTabState extends State<MyTab> with SingleTickerProviderStateMixin {
               controller: _tabController,
               indicatorColor: tabColors[_tabController.index],
               tabs: [
-                Tab(
-                  child: Text(
-                    'Note',
-                    style: TextStyle(
-                        fontSize: 20.0,
-                        color: _tabController.index == 0
-                            ? tabColors[_tabController.index]
-                            : Colors.grey),
-                  ),
-                ),
-                Tab(
-                  child: Text(
-                    'Todo',
-                    style: TextStyle(
-                        fontSize: 20.0,
-                        color: _tabController.index == 1
-                            ? tabColors[_tabController.index]
-                            : Colors.grey),
-                  ),
-                ),
-                Tab(
-                  child: Text(
-                    'Diary',
-                    style: TextStyle(
-                        fontSize: 20.0,
-                        color: _tabController.index == 2
-                            ? tabColors[_tabController.index]
-                            : Colors.grey),
-                  ),
-                ),
-                Tab(
-                  child: Text(
-                    'Archiv',
-                    style: TextStyle(
-                        fontSize: 20.0,
-                        color: _tabController.index == 3
-                            ? tabColors[_tabController.index]
-                            : Colors.grey),
-                  ),
-                ),
+                buildTap(0, 'Note'),
+                buildTap(1, 'Todo'),
+                buildTap(2, 'Diary'),
+                buildTap(3, 'Archiv'),
               ],
             ),
           ),

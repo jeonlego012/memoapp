@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:local_auth/local_auth.dart';
 
 import 'package:memoapp/model/diary.dart';
 import 'package:memoapp/model/diary_transaction.dart';
 import 'package:memoapp/components/search_box.dart';
+import 'package:memoapp/components/auth_api.dart';
 import 'diary_add.dart';
 import 'diary_child.dart';
 
@@ -22,6 +24,8 @@ class _DiaryListState extends State<DiaryList> {
   String _searchText = "";
 
   _DiaryListState() {
+    //final isAuthenticated = AuthApi.authenticate();
+
     _currentSubscription = loadAllDiarys().listen(_updateDiarys);
     _searchController.addListener(() {
       setState(() {
