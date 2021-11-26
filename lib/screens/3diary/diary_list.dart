@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:local_auth/local_auth.dart';
 
 import 'package:memoapp/model/diary.dart';
 import 'package:memoapp/model/diary_transaction.dart';
@@ -24,23 +23,27 @@ class _DiaryListState extends State<DiaryList> {
   String _searchText = "";
 
   _DiaryListState() {
-    //final isAuthenticated = AuthApi.authenticate();
-
-    _currentSubscription = loadAllDiarys().listen(_updateDiarys);
-    _searchController.addListener(() {
-      setState(() {
-        if (_searchController.text.isEmpty) {
-          _searchText = "";
-        } else {
-          _searchText = _searchController.text;
-        }
-      });
+    AuthApi.authenticate().then((authenticated) {
+      if (authenticated) {
+        _currentSubscription = loadAllDiarys().listen(_updateDiarys);
+        _searchController.addListener(() {
+          setState(() {
+            if (_searchController.text.isEmpty) {
+              _searchText = "";
+            } else {
+              _searchText = _searchController.text;
+            }
+          });
+        });
+      }
     });
   }
 
   @override
   void dispose() {
-    _currentSubscription!.cancel();
+    if (_currentSubscription != null) {
+      _currentSubscription!.cancel();
+    }
     super.dispose();
   }
 

@@ -18,7 +18,7 @@ class AuthApi {
     if (!isAvailable) return false;
     try {
       return await _auth.authenticate(
-        localizedReason: 'Scan Fingerprint To Authenticate',
+        localizedReason: 'Scan Face to Authenticate',
         useErrorDialogs: true,
         stickyAuth: true,
       );
